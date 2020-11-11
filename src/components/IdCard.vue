@@ -1,10 +1,32 @@
 <template lang="pug">
-div this is where the student's id card is shown
+  b-container
+    b-jumbotron( header="Rohit Rajak" lead="Your data:")
+      hr
+      p Full Name: {{this.fullName}}
+      p Roll Number: {{this.rollNumber}}
+      p Course: {{this.course}}
+      p Department: {{this.department}}
+      p Date of Birth: {{this.dateOfBirth}}
+      p Phone Number: {{this.fullName}}
+      p Institute Email: {{this.fullName}}
+      p Permanent Address: {{this.fullName}}
 </template>
 
 <script>
 export default {
-  name: 'IdCard'
+  name: 'IdCard',
+  data () {
+    return {
+      fullName: 'Rohit Rajak',
+      rollNumber: 'B180020',
+      phone: '9475587808',
+      instituteEMail: 'b180020@nitsikkim.ac.in',
+      permanentAddress: 'Gangtok, Sikkim',
+      course: 'B.Tech',
+      department: 'Computer Science and Engineering',
+      dateOfBirth: '1999-07-18'
+    }
+  }
 }
 </script>
 

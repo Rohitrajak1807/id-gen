@@ -7,6 +7,7 @@ import InformationForm from '../components/InformationForm'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
