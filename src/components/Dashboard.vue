@@ -2,7 +2,7 @@
   div
 <!--this page will contain links to other pages-->
 <!--  add a student-->
-<!--  view students: by dept, by course-->
+<!--  view students: by dept, by course. this will render a table in a separate vue component-->
 <!--  search for a student by rollnumber-->
 </template>
 
