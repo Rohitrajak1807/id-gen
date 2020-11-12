@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-container
+  b-container.py-3
     b-jumbotron( header="Rohit Rajak" lead="Your data:")
       hr
       p Full Name: {{this.fullName}}
@@ -7,9 +7,9 @@
       p Course: {{this.course}}
       p Department: {{this.department}}
       p Date of Birth: {{this.dateOfBirth}}
-      p Phone Number: {{this.fullName}}
-      p Institute Email: {{this.fullName}}
-      p Permanent Address: {{this.fullName}}
+      p Phone Number: {{this.phone}}
+      p Institute Email: {{this.instituteEMail}}
+      p Permanent Address: {{this.permanentAddress}}
 </template>
 
 <script>

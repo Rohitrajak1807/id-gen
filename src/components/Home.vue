@@ -1,7 +1,6 @@
 <template lang="pug">
-  div
-<!--    this page contains the login form, simply an input form with ID and password-->
-    b-container(fluid='sm')
+  div#home
+    b-container(fluid='sm').d-flex.flex-column.justify-content-center.h-100
       b-col(align-self='center' cols="5")
         b-form-group(label='Login ID:' label-for='login')
           b-form-input#login(v-model='form.id' type='text' required=true placeholder='Login')
@@ -31,5 +30,8 @@ export default {
 </script>
 
 <style scoped>
-
+  #home{
+    height: 100vh;
+    width: 100%;
+  }
 </style>
