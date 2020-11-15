@@ -6,10 +6,10 @@
           b-form-group#form_group_full_name(label='Search By :' label-for='search_by')
             b-form-select#course(v-model='searchType' :options='searchOption')
       b-row
-        b-col(v-if="searchType==1")
+        b-col(v-if="searchType===1")
           b-form-group#form_group_roll_number(label='Roll Number' label-for='roll_number')
             b-form-input#roll_number(v-model='search.rollNumber' placeholder='Enter your Roll Number' trim='')
-        template(v-if="searchType==2")
+        template(v-if="searchType===2")
           b-col
             b-form-group#form_group_course(label='Course' label-for='course')
               b-form-select#course(v-model='search.course' :options='courseOptions')
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-  #home{
+  #search{
     height: 100vh;
     width: 100%;
   }

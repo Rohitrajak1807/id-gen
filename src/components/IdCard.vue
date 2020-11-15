@@ -1,8 +1,7 @@
 <template lang="pug">
   b-container.py-3
-    b-jumbotron( header="Rohit Rajak" lead="Your data:")
+    b-jumbotron( header="Rohit Rajak")
       hr
-      p Full Name: {{this.fullName}}
       p Roll Number: {{this.rollNumber}}
       p Course: {{this.course}}
       p Department: {{this.department}}
