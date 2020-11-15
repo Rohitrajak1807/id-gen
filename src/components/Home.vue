@@ -1,5 +1,6 @@
 <template lang="pug">
   div#home
+    nav-blank
     b-container(fluid='sm').d-flex.flex-column.justify-content-center.h-100
       b-col(align-self='center' cols="5")
         b-form-group(label='Login ID:' label-for='login')
@@ -10,8 +11,13 @@
 </template>
 
 <script>
+import NavBlank from './nav/NavBlank'
+
 export default {
   name: 'Home',
+  components: {
+    'nav-blank': NavBlank
+  },
   data () {
     return {
       form: {
@@ -30,8 +36,8 @@ export default {
 </script>
 
 <style scoped>
-  #home{
-    height: 100vh;
-    width: 100%;
-  }
+#home {
+  height: 100vh;
+  width: 100%;
+}
 </style>

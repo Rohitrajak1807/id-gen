@@ -1,15 +1,16 @@
 <template lang="pug">
   div#search
+    nav-bar
     b-container(fluid='sm').py-4
       b-row
         b-col
           b-form-group#form_group_full_name(label='Search By :' label-for='search_by')
             b-form-select#course(v-model='searchType' :options='searchOption')
       b-row
-        b-col(v-if="searchType===1")
+        b-col(v-if="searchType==='roll'")
           b-form-group#form_group_roll_number(label='Roll Number' label-for='roll_number')
             b-form-input#roll_number(v-model='search.rollNumber' placeholder='Enter your Roll Number' trim='')
-        template(v-if="searchType===2")
+        template(v-if="searchType==='course'")
           b-col
             b-form-group#form_group_course(label='Course' label-for='course')
               b-form-select#course(v-model='search.course' :options='courseOptions')
@@ -21,8 +22,13 @@
 </template>
 
 <script>
+import NavLoggedIn from './nav/NavLoggedIn'
+
 export default {
   name: 'Search',
+  components: {
+    'nav-bar': NavLoggedIn
+  },
   data () {
     return {
       search: {
@@ -45,8 +51,8 @@ export default {
       searchType: '',
       searchOption:
       [
-        { value: '1', text: 'Search By Roll No.' },
-        { value: '2', text: 'List by Courses' }
+        { value: 'roll', text: 'Search By Roll No.' },
+        { value: 'course', text: 'List by Courses' }
       ]
     }
   },
