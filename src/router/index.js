@@ -21,7 +21,7 @@ export default new Router({
       component: InformationForm
     },
     {
-      path: '/id-card',
+      path: '/id-card/:rollNumber',
       name: 'IdCard',
       component: IdCard
     },
