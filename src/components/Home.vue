@@ -6,8 +6,8 @@
         b-form-group(label='Login ID:' label-for='login')
           b-form-input#login(v-model='form.id' type='text' required=true placeholder='Login')
         b-form-group(label='Password:' label-for='password')
-          b-form-input#password(v-model='form.password' required=true placeholder='Password')
-        b-button(type='submit' variant='primary') Submit
+          b-form-input#password(v-model='form.password' type='password' required=true placeholder='Password')
+        b-button(type='submit' variant='primary' v-on:click='onSubmit') Submit
 </template>
 
 <script>
@@ -28,8 +28,9 @@ export default {
   },
   methods: {
     onSubmit: function (event) {
-      event.preventDefault()
-      // do some validation and go to next page
+      if (this.form.id === 'root' && this.form.password === 'password') {
+        this.$router.push({name: 'InformationForm'})
+      }
     }
   }
 }

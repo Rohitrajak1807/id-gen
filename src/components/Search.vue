@@ -3,22 +3,14 @@
     nav-bar
     b-container(fluid='sm').py-4
       b-row
-        b-col
-          b-form-group#form_group_full_name(label='Search By :' label-for='search_by')
-            b-form-select#course(v-model='searchType' :options='searchOption')
-      b-row
-        b-col(v-if="searchType==='roll'")
-          b-form-group#form_group_roll_number(label='Roll Number' label-for='roll_number')
-            b-form-input#roll_number(v-model='search.rollNumber' placeholder='Enter your Roll Number' trim='')
-        template(v-if="searchType==='course'")
-          b-col
-            b-form-group#form_group_course(label='Course' label-for='course')
-              b-form-select#course(v-model='search.course' :options='courseOptions')
-          b-col
-            b-form-group#form_group_department(label='Department' label-for='department')
-              b-form-select#department(v-model='search.department' :options='departmentOptions')
-      b-row(v-if="searchType").ml-1.py-2
+        b-form-group#form_group_roll_number(label='Roll Number' label-for='roll_number')
+          b-form-input#roll_number(v-model='search.rollNumber' placeholder='Enter your Roll Number' trim='')
+      b-row.ml-1.py-2
         b-button(type='submit' variant='primary' v-on:click='onSubmit') Search
+      b-row.m-3.py-3(v-show="hasData")
+        b-table(:items="result" striped=true hover=true :fields="studentDataHeader" id="inf-table")
+        b-row
+          b-button(v-on:click="showDetails()" v-show="hasData") More Details...
 </template>
 
 <script>
@@ -32,43 +24,42 @@ export default {
   data () {
     return {
       search: {
-        department: '',
-        course: '',
         rollNumber: ''
       },
-      departmentOptions: [
-        {value: 'cse', text: 'Computer Science and Engineering'},
-        {value: 'ece', text: 'Electronics and Communication Engineering'},
-        {value: 'eee', text: 'Electric and Electronics Engineering'},
-        {value: 'me', text: 'Mechanical Engineering'},
-        {value: 'ce', text: 'Civil Engineering'}
-      ],
-      courseOptions: [
-        {value: 'phd', text: 'PhD'},
-        {value: 'mtech', text: 'M.Tech'},
-        {value: 'btech', text: 'B.Tech'}
-      ],
-      searchType: '',
-      searchOption:
-      [
-        { value: 'roll', text: 'Search By Roll No.' },
-        { value: 'course', text: 'List by Courses' }
-      ]
+      studentDataHeader: ['name', 'roll_no.', 'department'],
+      departmentOptions: {
+        cse: 'Computer Science and Engineering',
+        ece: 'Electronics and Communication Engineering',
+        eee: 'Electric and Electronics Engineering',
+        me: 'Mechanical Engineering',
+        ce: 'Civil Engineering'
+      },
+      result: [],
+      hasData: false
     }
   },
   methods: {
-    onSubmit: function (event) {
-      event.preventDefault()
-      // do some validation and go to next page
-      // Handle Search here
+    onSubmit: async function () {
+      this.result = []
+      console.log(this.search.rollNumber)
+      const response = await this.axios.get('http://localhost:3000/search', {
+        params: this.search
+      })
+      this.result = response.data
+      console.log(this.result)
+      this.result[0].department = this.departmentOptions[this.result[0].department]
+      this.result[0].roll_no = this.result[0].roll_no.toUpperCase()
+      this.hasData = true
+    },
+    showDetails: function () {
     }
   }
 }
 </script>
 
 <style scoped>
-  #search{
-    height: 100vh;
-    width: 100%;
-  }
+#search {
+  height: 100vh;
+  width: 100%;
+}
 </style>
