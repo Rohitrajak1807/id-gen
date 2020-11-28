@@ -1,7 +1,9 @@
 <template lang="pug">
   div
     nav-bar
-    data-form( v-bind:is-disabled='this.formDisabled')
+    data-form(v-bind:student="student")
+    b-container
+      b-button(type='submit' variant='primary' v-on:click='onSubmit') Submit
 </template>
 
 <script>
@@ -15,25 +17,24 @@ export default {
     'nav-bar': NavLoggedIn,
     'data-form': Form
   },
+
   data () {
     const model = new Student()
     return {
-      student: model,
-      formDisabled: false
+      student: model
     }
   },
   methods: {
     onSubmit: async function () {
+      console.log(this.student.formData)
       const response = await this.axios.post('http://localhost:3000/students', this.student.formData)
-      console.log(response)
+      if (response.status === 200) {
+        await this.$router.go()
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-/*#informationForm {*/
-/*  height: 100%;*/
-/*  width: 100%;*/
-/*}*/
 </style>

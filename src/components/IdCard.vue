@@ -1,17 +1,12 @@
 <template lang="pug">
   div
     nav-bar
-    b-container.py-3
-      b-jumbotron( header="Rohit Rajak")
-        hr
-        p Roll Number: {{this.rollNumber}}
-        p Course: {{this.course}}
-        p Department: {{this.department}}
-        p Date of Birth: {{this.dateOfBirth}}
-        p Phone Number: {{this.phone}}
-        p Institute Email: {{this.instituteEMail}}
-        p Permanent Address: {{this.permanentAddress}}
+    data-form(:student="student" :is-disabled="isDisabled" :is-disabled-pk="isDisabledPk")
+    b-container
+      b-button(v-on:click="show") SHOW
       b-button(v-b-modal="'deleteModal'" variant="danger") Delete
+      b-button#submit-changes(variant="primary" v-show="!isDisabled" v-on:click="updateStudent") Submit Changes
+      b-button#update-btn(variant="success" v-on:click="enableUpdate") Update
     b-modal#deleteModal(hide-header).pt-3
       | Are You Sure You want to delete this ID.
       template(#modal-footer="{ ok, cancel}")
@@ -21,33 +16,74 @@
 
 <script>
 import NavLoggedIn from './nav/NavLoggedIn'
+import Form from './subcomponents/Form'
+import Student from '../models/student'
 
 export default {
   name: 'IdCard',
   components: {
-    'nav-bar': NavLoggedIn
+    'nav-bar': NavLoggedIn,
+    'data-form': Form
+  },
+  async created () {
+    this.data = (await this.axios.get(`http://localhost:3000/students/${this.$route.params.rollNumber}`)).data[0]
+    this.student.formData.fullName = this.data.name
+    this.student.formData.rollNumber = this.data.roll_no
+    this.student.formData.course = this.data.course
+    this.student.formData.department = this.data.department
+    this.student.formData.dateOfBirth = new Date(this.data.date_of_birth)
+    this.student.formData.phone = this.data.phone
+    this.student.formData.instituteEmail = this.data.ins_email
+    this.student.formData.permanentAddress = this.data.perma_address
+  },
+  mounted () {
+    document.querySelector('#roll_number').setAttribute('disabled', true)
+    document.querySelector('#course').setAttribute('disabled', true)
   },
   data () {
+    const m = new Student()
     return {
-      fullName: 'Rohit Rajak',
-      rollNumber: 'B180020',
-      phone: '9475587808',
-      instituteEMail: 'b180020@nitsikkim.ac.in',
-      permanentAddress: 'Gangtok, Sikkim',
-      course: 'B.Tech',
-      department: 'Computer Science and Engineering',
-      dateOfBirth: '1999-07-18'
+      student: m,
+      isDisabled: true,
+      isDisabledPk: true,
+      data: {}
     }
   },
   methods: {
-    deleteId: function (ok) {
-      // handle Delete Here
+    deleteId: async function (ok) {
+      const res = await this.axios.delete(`http://localhost:3000/students/${this.$route.params.rollNumber}`)
+      if (res.status === 200) {
+        await this.$router.push({name: 'Search'})
+      }
       ok()
+    },
+    enableUpdate: function () {
+      this.isDisabled = false
+    },
+    updateStudent: async function () {
+      const jsDate = this.student.formData.dateOfBirth
+      const sqlDate = `${jsDate.getFullYear()}-${Number(jsDate.getMonth()) + 1}-${jsDate.getDate()}`
+      this.student.formData.dateOfBirth = sqlDate
+      const res = await this.axios.put(`http://localhost:3000/students/${this.$route.params.rollNumber}`, this.student.formData)
+      if (res.status === 200) {
+        await this.$router.push({name: 'Search'})
+      }
+    },
+    show: function () {
+      console.log(this.data.date_of_birth)
     }
   }
 }
 </script>
 
 <style scoped>
+#update-btn {
+  float: right;
+  margin-right: 20%;
+  margin-top: 2px;
+}
 
+#submit-changes {
+  margin-left: 50%;
+}
 </style>

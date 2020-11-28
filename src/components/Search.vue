@@ -52,6 +52,7 @@ export default {
       this.hasData = true
     },
     showDetails: function () {
+      this.$router.push({path: `/id-card/${this.result[0].roll_no.toLowerCase()}`})
     }
   }
 }

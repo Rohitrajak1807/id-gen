@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from '../components/Home'
 import IdCard from '../components/IdCard'
 import InformationForm from '../components/InformationForm'
-import Dashboard from '../components/Dashboard'
 import Search from '../components/Search'
 Vue.use(Router)
 
@@ -24,11 +23,6 @@ export default new Router({
       path: '/id-card/:rollNumber',
       name: 'IdCard',
       component: IdCard
-    },
-    {
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: Dashboard
     },
     {
       path: '/search',
