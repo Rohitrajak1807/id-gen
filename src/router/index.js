@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '../components/Home'
 import IdCard from '../components/IdCard'
 import InformationForm from '../components/InformationForm'
-
+import Search from '../components/Search'
 Vue.use(Router)
 
 export default new Router({
@@ -20,9 +20,14 @@ export default new Router({
       component: InformationForm
     },
     {
-      path: '/id-card',
+      path: '/id-card/:rollNumber',
       name: 'IdCard',
       component: IdCard
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
     }
   ]
 })
