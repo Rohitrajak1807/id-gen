@@ -3,10 +3,6 @@
     nav-bar
     data-form(:student="student" :is-disabled="isDisabled" :is-disabled-pk="isDisabledPk")
     b-container
-<<<<<<< HEAD
-      b-button(v-on:click="show") SHOW
-=======
->>>>>>> deepak
       b-button(v-b-modal="'deleteModal'" variant="danger") Delete
       b-button#submit-changes(variant="primary" v-show="!isDisabled" v-on:click="updateStudent") Submit Changes
       b-button#update-btn(variant="success" v-on:click="enableUpdate") Update
