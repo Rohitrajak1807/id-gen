@@ -3,7 +3,6 @@
     nav-bar
     data-form(:student="student" :is-disabled="isDisabled" :is-disabled-pk="isDisabledPk")
     b-container
-      b-button(v-on:click="show") SHOW
       b-button(v-b-modal="'deleteModal'" variant="danger") Delete
       b-button#submit-changes(variant="primary" v-show="!isDisabled" v-on:click="updateStudent") Submit Changes
       b-button#update-btn(variant="success" v-on:click="enableUpdate") Update
@@ -61,9 +60,10 @@ export default {
       this.isDisabled = false
     },
     updateStudent: async function () {
-      const jsDate = this.student.formData.dateOfBirth
-      const sqlDate = `${jsDate.getFullYear()}-${Number(jsDate.getMonth()) + 1}-${jsDate.getDate()}`
-      this.student.formData.dateOfBirth = sqlDate
+      const jsDate = new Date(this.student.formData.dateOfBirth)
+      console.log(jsDate)
+      console.log(`${jsDate.getFullYear()}-${Number(jsDate.getMonth()) + 1}-${jsDate.getDate()}`)
+      this.student.formData.dateOfBirth = `${jsDate.getFullYear()}-${Number(jsDate.getMonth()) + 1}-${jsDate.getDate()}`
       const res = await this.axios.put(`http://localhost:3000/students/${this.$route.params.rollNumber}`, this.student.formData)
       if (res.status === 200) {
         await this.$router.push({name: 'Search'})
